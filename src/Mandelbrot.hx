@@ -25,14 +25,13 @@ class Mandelbrot {
         this.width = width;
         this.height = height;
         this.maxIterations = maxIterations;
-        colorGrid = new Array();
+        colorGrid = createColorGrid();
     }
 
     public function update():Void {
     }
 
     public function render(graphics:Graphics):Void {
-        if (colorGrid.length == 0) createColorGrid();
         for (i in 0...height) {
             for (j in 0... width) {
                 final color = colorGrid[i][j];
@@ -41,13 +40,14 @@ class Mandelbrot {
         }
     }
 
-    private function createColorGrid():Void {
+    private function createColorGrid():Array<Array<Color>> {
         final rangeX = maxX - minX;
         final rangeY = maxY - minY;
         final incrementX = rangeX / width;
         final incrementY = rangeY / height;
+        final grid:Array<Array<Color>> = new Array();
         for (i in 0...height) {
-            colorGrid.push(new Array());
+            grid.push(new Array());
             final offsetY = incrementY * i;
             final y = minY + offsetY;
             for (j in 0...width) {
@@ -56,10 +56,11 @@ class Mandelbrot {
                 final iterations = mandelbrotForPoint(x, y);
                 final hsv = hsvForIterations(iterations);
                 final color = hsvToRgb(hsv);
-                colorGrid[i].push(color);
+                grid[i].push(color);
             }
         }
-        colorGrid.reverse();
+        grid.reverse();
+        return grid;
     }
 
     // Z_{n+1} = Z_{n} * Z_{n} + C; Z_{0} = 0; C = x + y * i
@@ -89,6 +90,7 @@ class Mandelbrot {
         return new Hsv(angle, 1, 1);
     }
 
+    // https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_RGB
     private static function hsvToRgb(hsv:Hsv):Color {
         final chroma = hsv.value * hsv.saturation;
         final hexAngle = Math.PI / 3;
