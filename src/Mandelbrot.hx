@@ -1,7 +1,8 @@
 package;
 
-import kha.graphics1.Graphics;
+import Hsv;
 import kha.Color;
+import kha.graphics1.Graphics;
 
 class Mandelbrot {
 
@@ -51,8 +52,8 @@ class Mandelbrot {
                 final offsetX = incrementX * j;
                 final x = minX + offsetX;
                 final iterations = mandelbrotForPoint(x, y);
-                final brightness = brightnessForIterations(iterations);
-                final color = Color.fromBytes(brightness, brightness, brightness);
+                final hsv = hsvForIterations(iterations);
+                final color = hsvToRgb(hsv);
                 colorGrid[i].push(color);
             }
         }
@@ -78,13 +79,34 @@ class Mandelbrot {
         return magnitude > limit;
     }
 
-    private function brightnessForIterations(iterations:Int):Int {
+    private function hsvForIterations(iterations:Int):Hsv {
+        if (iterations == maxIterations) return new Hsv(0, 0, 0);
         final percent = iterations / maxIterations;
-        final maxPercent = 1;
-        final maxIterationsBrightness = 0;
-        if (percent == maxPercent) return maxIterationsBrightness;
-        final maxBrightness = 255;
-        return Math.round(maxBrightness * percent);
+        final maxAngle = Math.PI * 2;
+        final angle = maxAngle * percent;
+        return new Hsv(angle, 1, 1);
+    }
+
+    private static function hsvToRgb(hsv:Hsv):Color {
+        final chroma = hsv.value * hsv.saturation;
+        final hexAngle = Math.PI / 3;
+        final projectedHue = hsv.hue / hexAngle;
+        final secondColor = chroma * (1 - Math.abs((projectedHue % 2) - 1));
+
+        var rgbArray:Array<Float> = [];
+        if (projectedHue >= 0 && projectedHue <= 1) rgbArray = [chroma, secondColor, 0];
+        else if (projectedHue > 1 && projectedHue <= 2) rgbArray = [secondColor, chroma, 0];
+        else if (projectedHue > 2 && projectedHue <= 3) rgbArray = [0, chroma, secondColor];
+        else if (projectedHue > 3 && projectedHue <= 4) rgbArray = [0, secondColor, chroma];
+        else if (projectedHue > 4 && projectedHue <= 5) rgbArray = [secondColor, 0, chroma];
+        else if (projectedHue > 5 && projectedHue <= 6) rgbArray = [chroma, 0, secondColor];
+
+        final match = hsv.value - chroma;
+        final r = rgbArray[0] + match;
+        final g = rgbArray[1] + match;
+        final b = rgbArray[2] + match;
+
+        return Color.fromFloats(r, g, b);
     }
 
 }
