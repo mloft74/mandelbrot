@@ -2,7 +2,7 @@ package;
 
 import kha.graphics1.Graphics;
 
-class MandelBrot {
+class Mandelbrot {
 
     private final minX:Float;
     private final maxX:Float;
