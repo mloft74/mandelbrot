@@ -11,7 +11,7 @@ class Project {
         final window = Window.get(0);
         final width = window.width;
         final height = window.height;
-        mandelbrot = new Mandelbrot(-2.5, 2.5, -2.5, 2.5, width, height);
+        mandelbrot = new Mandelbrot(0, 0, 5, 5, width, height);
     }
 
     public function update():Void {

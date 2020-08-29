@@ -15,11 +15,13 @@ class Mandelbrot {
     private final maxIterations:Int;
     private final colorGrid:Array<Array<Color>>;
 
-    public function new(minX:Float, maxX:Float, minY:Float, maxY:Float, width:Int, height:Int, maxIterations:Int = 100) {
-        this.minX = minX;
-        this.maxX = maxX;
-        this.minY = minY;
-        this.maxY = maxY;
+    public function new(cx:Float, cy:Float, spanX:Float, spanY:Float, width:Int, height:Int, maxIterations:Int = 100) {
+        final halfSpanX = spanX / 2;
+        final halfSpanY = spanY / 2;
+        this.minX = cx - halfSpanX;
+        this.maxX = cx + halfSpanX;
+        this.minY = cy - halfSpanY;
+        this.maxY = cy + halfSpanY;
         this.width = width;
         this.height = height;
         this.maxIterations = maxIterations;
