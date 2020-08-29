@@ -9,7 +9,7 @@ class Main {
 
     public static function main() {
         System.start(
-            {title: "Project", width: 800, height: 600},
+            {title: "Project", width: 800, height: 800},
             (window) -> {
                 Assets.loadEverything(() -> {
                     final project = new Project();
