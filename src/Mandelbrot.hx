@@ -84,9 +84,10 @@ class Mandelbrot {
 
     private function hsvForIterations(iterations:Int):Hsv {
         if (iterations == maxIterations) return new Hsv(0, 0, 0);
-        final percent = iterations / maxIterations;
         final maxAngle = Math.PI * 2;
-        final angle = maxAngle * percent;
+        final divisions = 36;
+        final theta = maxAngle / divisions;
+        final angle = (theta * iterations) % maxAngle;
         return new Hsv(angle, 1, 1);
     }
 
