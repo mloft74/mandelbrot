@@ -13,7 +13,7 @@ class Main {
             (window) -> {
                 Assets.loadEverything(() -> {
                     final project = new Project();
-                    Scheduler.addTimeTask( project.update, 0, 1 / 60);
+                    Scheduler.addTimeTask( project.update, 0, 1 / 30);
                     System.notifyOnFrames( project.render );
                 });
             }

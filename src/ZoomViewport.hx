@@ -35,6 +35,12 @@ class ZoomViewport {
         mandelbrot = createMandelbrot();
     }
 
+    public function onMouseWheel(delta:Int):Void {
+        final zoomInFactor = Math.pow(0.80, delta);
+        span *= zoomInFactor;
+        mandelbrot = createMandelbrot();
+    }
+
     private function translate(x:Int, y:Int):Void {
         final vector = getScaledVector(x, y);
         final halfSpan = span / 2;

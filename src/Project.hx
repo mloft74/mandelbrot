@@ -10,7 +10,7 @@ class Project {
 
     public function new() {
         zoomViewport = new ZoomViewport();
-        Mouse.get().notify(zoomViewport.onMouseDown, null, null, null);
+        Mouse.get().notify(zoomViewport.onMouseDown, null, null, zoomViewport.onMouseWheel);
     }
 
     public function update():Void {
