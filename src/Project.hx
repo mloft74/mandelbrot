@@ -1,17 +1,16 @@
 package;
 
-import kha.Window;
+import ZoomViewport;
 import kha.Framebuffer;
+import kha.input.Mouse;
 
 class Project {
 
-    private final mandelbrot:Mandelbrot;
+    private final zoomViewport:ZoomViewport;
 
     public function new() {
-        final window = Window.get(0);
-        final width = window.width;
-        final height = window.height;
-        mandelbrot = new Mandelbrot(0, 0, 5, 5, width, height);
+        zoomViewport = new ZoomViewport();
+        Mouse.get().notify(zoomViewport.onMouseDown, null, null, null);
     }
 
     public function update():Void {
@@ -21,7 +20,7 @@ class Project {
         final frameBuffer = frameBuffers[0];
         final graphics = frameBuffer.g1;
         graphics.begin();
-        mandelbrot.render(graphics);
+        zoomViewport.render(graphics);
         graphics.end();
     }
 
