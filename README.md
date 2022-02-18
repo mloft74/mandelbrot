@@ -10,3 +10,9 @@ This project was built with [Haxe 4](https://haxe.org/) and [Kha](https://github
   * Install the "Haxe Extension Pack" made by the Haxe Foundation
   * Install the "Kha Extension Pack" made by Kode
   * You should now be able to open the project in VS Code and debug it the HTML target
+
+# Controls
+
+* Left click: move view
+* Scroll up: zoom in
+* Scroll down: zoom out
